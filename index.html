@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Forever</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700&family=Inter:wght@300&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #d4af37;
+            --bg-black: #050505;
+            --heart-red: #ff4d6d;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body.locked { overflow: hidden; height: 100vh; }
+
+        .page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .active { display: flex; }
+
+        /* --- UI Elements --- */
+        #pass-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--gold);
+            color: white;
+            font-size: 2.5rem;
+            text-align: center;
+            letter-spacing: 12px;
+            width: 220px;
+            outline: none;
+            margin-bottom: 30px;
+        }
+
+        .btn-gold {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 40px;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            z-index: 10;
+        }
+
+        .btn-gold:hover { background: var(--gold); color: #000; }
+
+        /* --- 3D Paper Hearts --- */
+        .heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .paper-heart {
+            position: absolute;
+            color: var(--heart-red);
+            font-size: 2rem; /* Bigger hearts */
+            user-select: none;
+            opacity: 1;
+            animation: fall linear forwards, spin 3s ease-in-out infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); opacity: 0; }
+        }
+
+        @keyframes spin {
+            0% { transform: translateX(0) rotateY(0deg); }
+            50% { transform: translateX(30px) rotateY(180deg); }
+            100% { transform: translateX(0) rotateY(360deg); }
+        }
+
+        /* --- Content Styling --- */
+        .para {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 2.5s ease, transform 2s ease;
+            margin-bottom: 300px;
+            font-size: 1.6rem;
+            line-height: 2.2;
+            font-family: 'Playfair Display', serif;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .para.visible { opacity: 1; transform: translateY(0); }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 50px;
+            max-width: 800px;
+        }
+
+        .photo-grid img { width: 100%; opacity: 0; transition: 2s; border: 1px solid rgba(212,175,55,0.3); }
+        .photo-grid img.visible { opacity: 1; }
+
+        .diamond-shine { font-size: 7rem; filter: drop-shadow(0 0 20px #fff); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        #final-celebration {
+            max-width: 800px;
+            padding: 50px 20px;
+        }
+    </style>
+</head>
+<body class="locked">
+
+    <audio id="bg-music" loop><source src="Saja_Boys_Ft_Andrew_Choi_neckwav_Danny_Chung_Kevin_Woo_SamUIL_KPop_Demon_Hunters_Cast_-_Soda_Pop_thinknews.com.ng.mp3" type="audio/mpeg"></audio>
+    <div class="heart-container" id="heart-box"></div>
+
+    <section id="page1" class="page active">
+        <h2 style="color: var(--gold); letter-spacing: 8px;">PRIVATE ACCESS</h2>
+        <input type="password" id="pass-input" maxlength="4">
+        <button class="btn-gold" onclick="checkPass()">Unlock</button>
+    </section>
+
+    <section id="page2" class="page" style="justify-content: flex-start;">
+        <div class="content-wrap" style="margin-top: 25vh;">
+            <p class="para">They say the universe is made of atoms, but mine is made of moments with you.</p>
+            <p class="para">It’s the way you laugh when you’re tired, and how you make every simple minute feel like a movie.</p>
+            <p class="para">I found a home in you that I didn't even know I was looking for. You are my sanctuary.</p>
+            <p class="para">I promise to spend the rest of my life trying to be worthy of the love you give so freely.</p>
+            <p class="para">I’ll let my heart speak now... <br><span style="color:var(--gold); font-size: 1rem;">SCROLL DOWN SLOWLY</span></p>
+            
+            <h2 class="para" style="color: var(--gold);">Our Memories Together</h2>
+            <div class="photo-grid">
+                <img src="Screenshot_2026-05-04-15-30-22-145.jpeg" class="mem-pic">
+                <img src="Screenshot_2026-05-04-15-49-55-674.jpeg" class="mem-pic">
+                <img src="Screenshot_2026-05-04-15-51-20-647.jpeg" class="mem-pic">
+                <img src="Screenshot_2026-05-04-15-34-31-232.jpeg" class="mem-pic">
+            </div>
+
+            <div style="height: 300px;"></div>
+            <button class="btn-gold para" onclick="showProposal()">Click for a surprise</button>
+            <div style="height: 150px;"></div>
+        </div>
+    </section>
+
+    <section id="page3" class="page">
+        <div id="gift-section">
+            <div id="ring-box" style="font-size: 5rem; cursor: pointer;">🎁</div>
+            <div id="diamond" style="display:none;" class="diamond-shine">💍</div>
+        </div>
+        
+        <div id="proposal-ui" style="display:none; margin-top: 30px;">
+            <h2 id="prop-text" style="font-family: 'Playfair Display', serif; font-size: 2rem;">Will you make me the happiest person alive?</h2>
+            <div style="margin-top: 20px;">
+                <button class="btn-gold" onclick="sayYes()">YES</button>
+                <button class="btn-gold" id="no-btn" onmouseover="moveNo()">NO</button>
+            </div>
+        </div>
+        
+        <div id="final-celebration" style="display:none;">
+            <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+                 <p id="heartfelt-note" class="para" style="opacity:1; transform:none; margin-bottom: 0;">
+                    I am so profoundly grateful to have you in my life. Every day feels like a beautiful dream because you are in it. You are my heart, my soul, and my forever.
+                 </p>
+            </div>
+            
+            <div style="margin-top: 100px;">
+                <video width="100%" max-width="600" id="v-player" style="border: 1px solid var(--gold);">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            
+            <h1 id="finally-msg" style="color: var(--gold); font-family: 'Playfair Display', serif; font-size: 4rem; margin: 100px 0;">Yes! Finally!!! ❤️</h1>
+            <div style="height: 200px;"></div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('pass-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPass(); });
+
+        function checkPass() {
+            if(document.getElementById('pass-input').value === "1234") {
+                document.getElementById('page1').style.display = 'none';
+                document.getElementById('page2').style.display = 'flex';
+                document.body.classList.remove('locked');
+                document.getElementById('bg-music').play();
+                initObserver();
+                autoScrollPage2();
+            } else { alert("Incorrect Password"); }
+        }
+
+        function createPaperHeart() {
+            const container = document.getElementById('heart-box');
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'paper-heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // Falling speed
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        function initObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.para, .mem-pic').forEach(el => observer.observe(el));
+        }
+
+        function autoScrollPage2() {
+            setTimeout(() => {
+                const scroller = setInterval(() => {
+                    if(document.getElementById('page2').style.display === 'flex') {
+                        window.scrollBy(0, 1);
+                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) clearInterval(scroller);
+                    } else { clearInterval(scroller); }
+                }, 40);
+            }, 3000);
+        }
+
+        function showProposal() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'flex';
+            window.scrollTo(0,0);
+            document.getElementById('ring-box').onclick = function() {
+                this.style.display = 'none';
+                document.getElementById('diamond').style.display = 'block';
+                document.getElementById('proposal-ui').style.display = 'block';
+            };
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random() * 80 + '%';
+            btn.style.top = Math.random() * 80 + '%';
+            document.getElementById('prop-text').innerText = "Please choose YES! ❤️";
+        }
+
+        function sayYes() {
+            document.getElementById('proposal-ui').style.display = "none";
+            document.getElementById('gift-section').style.display = "none";
+            document.getElementById('final-celebration').style.display = "block";
+            
+            // Start the 3D Heart Shower
+            setInterval(createPaperHeart, 150);
+
+            // Play Video
+            const video = document.getElementById('v-player');
+            video.play();
+
+            // Unlock and Auto-Scroll to the end
+            document.body.style.overflow = "auto";
+            setTimeout(() => {
+                const finalScroller = setInterval(() => {
+                    window.scrollBy(0, 2);
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) clearInterval(finalScroller);
+                }, 30);
+            }, 2000);
+        }
+    </script>
+</body>
+      </html>
